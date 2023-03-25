@@ -1668,53 +1668,50 @@ def dashboard_app(df, dash_app, plotly_config):
         return "Fill the required fields and click on 'Submit' to generate the graph you want!!"
 
     @dash_app.callback(
-        Output("output-state-tree", "children"),
-        Input("submit-button-tree", "n_clicks"),
-        State("input-x-tree", "value"),
-        State("input-color-tree", "value"),
-        State("input-value-tree", "value"),
-        State("input-other-tree", "value"),
-    )
+            Output("output-state-tree", "children"),
+            Input("submit-button-tree", "n_clicks"),
+            State("input-x-tree", "value"),
+            State("input-color-tree", "value"),
+            State("input-value-tree", "value"),
+            State("input-other-tree", "value"),
+        )
     def update_treeplot(n_clicks, input1, input2, input3, input4):
-        if input1 is not None:
-            if set(input1).issubset(df.columns):
-                input_parametes = {
-                    "color": strNoneConvert(input2),
-                    "values": strNoneConvert(input3),
-                    "template": plot_theme,
-                    "color_continuous_scale": plotly_color_continuous_scale,
-                }
+        if input1 is not None and set(input1).issubset(df.columns):
+            input_parametes = {
+                "color": strNoneConvert(input2),
+                "values": strNoneConvert(input3),
+                "template": plot_theme,
+                "color_continuous_scale": plotly_color_continuous_scale,
+            }
 
-                input_parametes.update(otherinputtodict(input4))
+            input_parametes.update(otherinputtodict(input4))
 
-                fig = px.treemap(df, path=input1, **input_parametes)
-                return dcc.Graph(id="graph-tree-tabs", figure=fig)
+            fig = px.treemap(df, path=input1, **input_parametes)
+            return dcc.Graph(id="graph-tree-tabs", figure=fig)
 
         return "Fill the required fields and click on 'Submit' to generate the graph you want!!"
 
     @dash_app.callback(
-        Output("output-state-sun", "children"),
-        Input("submit-button-sun", "n_clicks"),
-        State("input-x-sun", "value"),
-        State("input-color-sun", "value"),
-        State("input-value-sun", "value"),
-        State("input-other-sun", "value"),
-    )
+            Output("output-state-sun", "children"),
+            Input("submit-button-sun", "n_clicks"),
+            State("input-x-sun", "value"),
+            State("input-color-sun", "value"),
+            State("input-value-sun", "value"),
+            State("input-other-sun", "value"),
+        )
     def update_sunplot(n_clicks, input1, input2, input3, input4):
-        if input1 is not None:
-            if set(input1).issubset(df.columns):
+        if input1 is not None and set(input1).issubset(df.columns):
+            input_parametes = {
+                "color": strNoneConvert(input2),
+                "values": strNoneConvert(input3),
+                "template": plot_theme,
+                "color_continuous_scale": plotly_color_continuous_scale,
+            }
 
-                input_parametes = {
-                    "color": strNoneConvert(input2),
-                    "values": strNoneConvert(input3),
-                    "template": plot_theme,
-                    "color_continuous_scale": plotly_color_continuous_scale,
-                }
+            input_parametes.update(otherinputtodict(input4))
 
-                input_parametes.update(otherinputtodict(input4))
-
-                fig = px.sunburst(df, path=input1, **input_parametes)
-                return dcc.Graph(id="graph-sun-tabs", figure=fig)
+            fig = px.sunburst(df, path=input1, **input_parametes)
+            return dcc.Graph(id="graph-sun-tabs", figure=fig)
 
         return "Fill the required fields and click on 'Submit' to generate the graph you want!!"
 
@@ -1744,27 +1741,25 @@ def dashboard_app(df, dash_app, plotly_config):
         return "Fill the required fields and click on 'Submit' to generate the graph you want!!"
 
     @dash_app.callback(
-        Output("output-state-hist", "children"),
-        Input("submit-button-hist", "n_clicks"),
-        State("input-x-hist", "value"),
-        State("input-color-hist", "value"),
-        State("input-other-hist", "value"),
-    )
+            Output("output-state-hist", "children"),
+            Input("submit-button-hist", "n_clicks"),
+            State("input-x-hist", "value"),
+            State("input-color-hist", "value"),
+            State("input-other-hist", "value"),
+        )
     def update_histogram(n_clicks, input1, input2, input3):
-        if input1 is not None:
-            if input1 in df.columns:
+        if input1 is not None and input1 in df.columns:
+            input_parametes = {
+                "x": strNoneConvert(input1),
+                "color": strNoneConvert(input2),
+                "template": plot_theme,
+                "color_continuous_scale": plotly_color_continuous_scale,
+            }
 
-                input_parametes = {
-                    "x": strNoneConvert(input1),
-                    "color": strNoneConvert(input2),
-                    "template": plot_theme,
-                    "color_continuous_scale": plotly_color_continuous_scale,
-                }
+            input_parametes.update(otherinputtodict(input3))
 
-                input_parametes.update(otherinputtodict(input3))
-
-                fig = px.histogram(df, **input_parametes)
-                return dcc.Graph(id="graph-hist-tabs", figure=fig)
+            fig = px.histogram(df, **input_parametes)
+            return dcc.Graph(id="graph-hist-tabs", figure=fig)
 
         return "Fill the required fields and click on 'Submit' to generate the graph you want!!"
 
@@ -1796,54 +1791,55 @@ def dashboard_app(df, dash_app, plotly_config):
         return "Fill the required fields and click on 'Submit' to generate the graph you want!!"
 
     @dash_app.callback(
-        Output("output-state-heat", "children"),
-        Input("submit-button-heat", "n_clicks"),
-        State("input-x-heat", "value"),
-        State("input-y-heat", "value"),
-        State("input-color-heat", "value"),
-        State("input-other-heat", "value"),
-    )
+            Output("output-state-heat", "children"),
+            Input("submit-button-heat", "n_clicks"),
+            State("input-x-heat", "value"),
+            State("input-y-heat", "value"),
+            State("input-color-heat", "value"),
+            State("input-other-heat", "value"),
+        )
     def update_heatplot(n_clicks, input1, input2, input3, input4):
-        if not input1 is None and not input2 is None:
-            if strNoneConvert(input1) in df.columns and strNoneConvert(input2) in df.columns:
+        if (
+            not input1 is None
+            and not input2 is None
+            and strNoneConvert(input1) in df.columns
+            and strNoneConvert(input2) in df.columns
+        ):
+            input_parametes = {
+                "x": strNoneConvert(input1),
+                "y": strNoneConvert(input2),
+                "z": strNoneConvert(input3),
+                "template": plot_theme,
+                "color_continuous_scale": plotly_color_continuous_scale,
+            }
+            input_parametes.update(otherinputtodict(input4))
 
-                input_parametes = {
-                    "x": strNoneConvert(input1),
-                    "y": strNoneConvert(input2),
-                    "z": strNoneConvert(input3),
-                    "template": plot_theme,
-                    "color_continuous_scale": plotly_color_continuous_scale,
-                }
-                input_parametes.update(otherinputtodict(input4))
-
-                fig = px.density_heatmap(df, **input_parametes)
-                return dcc.Graph(id="graph-heat-tabs", figure=fig)
+            fig = px.density_heatmap(df, **input_parametes)
+            return dcc.Graph(id="graph-heat-tabs", figure=fig)
 
         return "Fill the required fields and click on 'Submit' to generate the graph you want!!"
 
     @dash_app.callback(
-        Output("output-state-violin", "children"),
-        Input("submit-button-violin", "n_clicks"),
-        State("input-x-violin", "value"),
-        State("input-y-violin", "value"),
-        State("input-color-violin", "value"),
-        State("input-other-violin", "value"),
-    )
+            Output("output-state-violin", "children"),
+            Input("submit-button-violin", "n_clicks"),
+            State("input-x-violin", "value"),
+            State("input-y-violin", "value"),
+            State("input-color-violin", "value"),
+            State("input-other-violin", "value"),
+        )
     def update_violinplot(n_clicks, input1, input2, input3, input4):
-        if not input1 is None:
-            if strNoneConvert(input1) in df.columns:
+        if not input1 is None and strNoneConvert(input1) in df.columns:
+            input_parametes = {
+                "x": strNoneConvert(input2),
+                "y": strNoneConvert(input1),
+                "color": strNoneConvert(input3),
+                "template": plot_theme,
+                "color_continuous_scale": plotly_color_continuous_scale,
+            }
+            input_parametes.update(otherinputtodict(input4))
 
-                input_parametes = {
-                    "x": strNoneConvert(input2),
-                    "y": strNoneConvert(input1),
-                    "color": strNoneConvert(input3),
-                    "template": plot_theme,
-                    "color_continuous_scale": plotly_color_continuous_scale,
-                }
-                input_parametes.update(otherinputtodict(input4))
-
-                fig = px.violin(df, **input_parametes)
-                return dcc.Graph(id="graph-violin-tabs", figure=fig)
+            fig = px.violin(df, **input_parametes)
+            return dcc.Graph(id="graph-violin-tabs", figure=fig)
         return "Fill the required fields and click on 'Submit' to generate the graph you want!!"
 
     @dash_app.callback(
@@ -2117,11 +2113,10 @@ def dashboard_app(df, dash_app, plotly_config):
 
 def create_data_table(df):
     """Create Dash datatable from Pandas DataFrame."""
-    table = dash_table.DataTable(
+    return dash_table.DataTable(
         id="database-table",
         columns=[{"name": i, "id": i} for i in df.columns],
         data=df.to_dict("records"),
         style_cell={"textAlign": "center"},
         page_size=300,
     )
-    return table
